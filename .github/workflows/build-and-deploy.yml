@@ -5,6 +5,9 @@ on:
     branches: [ main ]
     paths:
       - 'src/**' # Solo se dispara si cambia el código del microservicio
+      - 'infrastructure/**' # También si cambian los scripts de infraestructura (ej. Dockerfile, YAMLs)
+      - 'k8s/**' # Y si cambian los manifiestos de Kubernetes
+      - '.github/workflows/**' # O si cambian los workflows (para actualizar el pipeline)
 
 env:
   REGISTRY: ghcr.io
@@ -69,8 +72,37 @@ jobs:
           git add k8s/apps/audit-service/deployment.yaml
           git commit -m "chore: update image to sha-${{ github.sha }} [skip ci]"
           git push
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Checkov
+        run: |
+          pip install checkov
+          checkov -d infrastructure/terraform --soft-fail > checkov-report.txt
+
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          output: 'trivy-report.txt'
+          exit-code: '0'
+
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            checkov-report.txt
+            trivy-report.txt
+          retention-days: 1
+
+  # 2. El Agente AI (depende de security-scan)
   ai-audit-gate:
-    needs: [ build-and-push ] # O el job donde hagas los scans
+    needs: [security-scan, build-and-push] # <-- IMPORTANTE: Espera a ambos
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code

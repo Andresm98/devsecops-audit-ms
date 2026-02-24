@@ -112,4 +112,21 @@ kubectl port-forward svc/argocd-server -n argocd 8081:443
 
 * * * * *
 
+## 🤖 AI-DevOps Sovereign Agent (Gemini 1.5 Flash)
+
+El núcleo de gobernanza de este proyecto evoluciona de un pipeline estático a un **Agente de IA Autónomo**. Este componente actúa como el "Auditor Final" antes de cualquier promoción a entornos productivos.
+
+### 🧠 Capacidades del Agente:
+- **Razonamiento Contextual:** A diferencia de los escáneres tradicionales que solo listan errores, el agente analiza la severidad real cruzando los reportes de **Checkov** (IaC) y **Trivy** (App).
+- **Decision Making:** El agente tiene la autoridad de ejecutar un `sys.exit(1)`, bloqueando el flujo de CI/CD si detecta riesgos que comprometan la soberanía del dato o la seguridad del clúster.
+- **Reporting Ejecutivo:** Genera un análisis técnico detallado, proporcionando la solución exacta y el porqué del bloqueo.
+
+### ⚙️ Lógica de Decisión del Auditor:
+1. **Detección:** Recolecta artefactos de escaneo en formato raw.
+2. **Evaluación:** Procesa los logs mediante el modelo **Gemini 1.5 Flash**.
+3. **Sentencia:** - ✅ `Success`: Si la infraestructura es resiliente, autoriza el despliegue.
+    - ❌ `Bloqueado`: Si detecta riesgos (ej. Llaves RSA, S3 Públicos, CVEs Críticos), detiene el ciclo de vida.
+
+* * * * *
+
 **Desarrollado por Andresm98** - *Solutions Architect Project Portfolio*

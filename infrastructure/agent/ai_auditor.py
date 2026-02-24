@@ -44,6 +44,12 @@ def analyze_infrastructure():
 
         analysis = response.text
         print("\n=== ANÁLISIS DEL AGENTE AI ===\n")
+
+        # Guardar el análisis en un archivo Markdown para el PR
+        with open("ai_report.md", "w") as f:
+            f.write("### 🤖 DevSecOps AI Auditor Report\n")
+            f.write(analysis)
+
         print(analysis)
 
         if "success" in analysis.lower():

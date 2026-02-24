@@ -104,6 +104,9 @@ jobs:
   ai-audit-gate:
     needs: [security-scan, build-and-push] # <-- IMPORTANTE: Espera a ambos
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -125,3 +128,9 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python infrastructure/agent/ai_auditor.py
+
+      - name: Post AI Report to PR
+        if: always() && github.event_name == 'pull_request' # Solo si es un PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          filePath: ai_report.md

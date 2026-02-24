@@ -16,10 +16,12 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
+      imagePullSecrets:
+        - name: ghcr-auth
       containers:
         - name: audit-service
-          image: audit-service:latest
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/Andresm98/devsecops-audit-ms-audit-service # Esto lo actualizará el bot
+          imagePullPolicy: Always # Ahora sí, la última de GHCR
           ports:
             - containerPort: 8080
           resources:

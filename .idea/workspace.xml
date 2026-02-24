@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee212d26-3b67-4691-a728-b235237a8016" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/build-and-deploy.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/k8s/apps/audit-service/quota.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/terraform/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/terraform/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/k8s/apps/audit-service/deployment.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/k8s/apps/audit-service/deployment.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,10 +39,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -57,6 +60,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.go.formatter.settings.were.checked": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
@@ -103,7 +107,8 @@
       <option name="presentableId" value="Default" />
       <updated>1771897678150</updated>
       <workItem from="1771897679383" duration="2417000" />
-      <workItem from="1771900187903" duration="4748000" />
+      <workItem from="1771900187903" duration="5911000" />
+      <workItem from="1771906250788" duration="306000" />
     </task>
     <servers />
   </component>

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ee212d26-3b67-4691-a728-b235237a8016" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/infrastructure/agent/ai_auditor.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/build-and-deploy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build-and-deploy.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>

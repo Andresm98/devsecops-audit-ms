@@ -69,3 +69,23 @@ jobs:
           git add k8s/apps/audit-service/deployment.yaml
           git commit -m "chore: update image to sha-${{ github.sha }} [skip ci]"
           git push
+  ai-audit-gate:
+    needs: [ build-and-push ] # Se ejecuta después de construir pero antes de actualizar el manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install google-generativeai
+
+      # Este es el cerebro
+      - name: Run AI Auditor Agent
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python infrastructure/agent/ai_auditor.py

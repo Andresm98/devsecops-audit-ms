@@ -20,7 +20,7 @@ spec:
         - name: ghcr-auth
       containers:
         - name: audit-service
-          image: ghcr.io/Andresm98/devsecops-audit-ms-audit-service # Esto lo actualizará el bot
+          image: ghcr.io/Andresm98/devsecops-audit-ms-audit-service:sha-1b28e02fcd74f86751ff3563dc0863e1ae06974a
           imagePullPolicy: Always # Ahora sí, la última de GHCR
           ports:
             - containerPort: 8080

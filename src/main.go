@@ -21,4 +21,5 @@ func main() {
 
         fmt.Println("Audit Service running on port 8080...")
         log.Fatal(http.ListenAndServe(":8080", nil))
+        log.Println("AI-Agent Status: Monitoring security logs...")
 }

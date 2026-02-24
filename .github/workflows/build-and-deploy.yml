@@ -9,6 +9,14 @@ on:
       - 'k8s/**' # Y si cambian los manifiestos de Kubernetes
       - '.github/workflows/**' # O si cambian los workflows (para actualizar el pipeline)
 
+  pull_request: # También se dispara en PRs para que el agente AI pueda analizar los cambios antes de mergear
+    branches: [ main ]
+    paths:
+      - 'src/**' # Solo se dispara si cambia el código del microservicio
+      - 'infrastructure/**' # También si cambian los scripts de infraestructura (ej. Dockerfile, YAMLs)
+      - 'k8s/**' # Y si cambian los manifiestos de Kubernetes
+      - '.github/workflows/**' # O si cambian los workflows (para actualizar el pipeline)
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}-audit-service
@@ -125,6 +133,7 @@ jobs:
         run: pip install google-genai
 
       - name: Run AI Auditor Agent
+        id: ai_agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python infrastructure/agent/ai_auditor.py

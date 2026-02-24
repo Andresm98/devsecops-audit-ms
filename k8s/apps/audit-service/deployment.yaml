@@ -18,7 +18,8 @@ spec:
         runAsUser: 1000
       containers:
         - name: audit-service
-          image: TU_USUARIO/audit-service:latest # Luego lo automatizaremos
+          image: audit-service:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           resources:

@@ -1,20 +1,19 @@
 import os
-import google.generativeai as genai
 import sys
-
-# Configuración de Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel('gemini-1.5-flash')
+from google import genai # Nueva forma de importar
 
 def analyze_infrastructure():
+    # Inicializar el cliente con la nueva librería
+    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+    model_id = "gemini-1.5-flash" # Confirmamos el ID estable
+
     reports = ""
 
-    # Intentar leer Checkov
+    # Lectura de archivos (Mantenemos tu lógica que es correcta)
     if os.path.exists("checkov-report.txt"):
         with open("checkov-report.txt", "r") as f:
             reports += "\n--- CHECKOV IAC REPORT ---\n" + f.read()
 
-    # Intentar leer Trivy
     if os.path.exists("trivy-report.txt"):
         with open("trivy-report.txt", "r") as f:
             reports += "\n--- TRIVY SECURITY REPORT ---\n" + f.read()
@@ -37,19 +36,24 @@ def analyze_infrastructure():
     """
 
     try:
-        response = model.generate_content(prompt)
+        # Nueva sintaxis para generar contenido
+        response = client.models.generate_content(
+            model=model_id,
+            contents=prompt
+        )
+
         analysis = response.text
+        print("\n=== ANÁLISIS DEL AGENTE AI ===\n")
         print(analysis)
 
-        # Lógica de decisión del Agente
         if "success" in analysis.lower():
             sys.exit(0)
         else:
-            print("\n[AI AGENT] Pipeline abortado por riesgos de seguridad detectados.")
+            print("\n[AI AGENT] Pipeline abortado por riesgos detectados.")
             sys.exit(1)
 
     except Exception as e:
-        print(f"Error contactando al Agente AI: {e}")
+        print(f"Error crítico en el Agente AI: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":

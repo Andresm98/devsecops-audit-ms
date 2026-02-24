@@ -14,12 +14,30 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # Ejecutar Checkov y guardar en archivo (continuar aunque falle para que el agente analice)
       - name: Run Checkov (IaC Scan)
-        uses: bridgecrewio/checkov-action@master
+        run: |
+          pip install checkov
+          checkov -d infrastructure/terraform --soft-fail > checkov-report.txt
+
+      # Ejecutar Trivy y guardar en archivo
+      - name: Run Trivy (FS Scan)
+        uses: aquasecurity/trivy-action@master
         with:
-          directory: infrastructure/terraform
-          framework: terraform
-          soft_fail: false # El pipeline falla si hay riesgos críticos
+          scan-type: 'fs'
+          format: 'table'
+          output: 'trivy-report.txt'
+          exit-code: '0' # Dejamos que el agente decida si el fallo es crítico
+          severity: 'CRITICAL,HIGH'
+
+      # Subir los reportes como artefactos para que el siguiente Job los lea
+      - name: Upload Security Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-reports
+          path: |
+            checkov-report.txt
+            trivy-report.txt
 
   app-security:
     name: "Application & Container Scan"

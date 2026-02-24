@@ -5,7 +5,7 @@ from google import genai # Nueva forma de importar
 def analyze_infrastructure():
     # Inicializar el cliente con la nueva librería
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-    model_id = "gemini-1.5-flash" # Confirmamos el ID estable
+    model_id = "gemini-2.0-flash" # Confirmamos el ID estable
 
     reports = ""
 
